@@ -1,0 +1,40 @@
+funcion PROMEDIO(entero: numeroDeElementos) 
+	variables: entero: i; flotante: promedio, elemento
+	
+	i = 0
+	
+	mientras (i < numeroDeElementos)
+		leer elemento
+		promedio = promedio + elemento
+		i = i + 1
+	fin-mientras
+	
+	promedio = promedio / numeroDeElementos
+	regresa promedio
+fin-funcion
+	
+funcion APROBADO(flotante: promedio)
+	variables: booleano: aprobado
+	
+	si (promedio >= 7) entonces
+		escribir "Aprobado"
+	fin-si
+	
+	si (promedio < 7) entonces
+		escribir "No aprobado"
+	fin-si
+fin-funcion
+
+
+inicio-programa
+	variables: entero: numeroDeElementos; flotante: promedio
+	
+	leer numeroDeElementos
+	promedio = 0
+
+	promedio = PROMEDIO(numeroDeElementos)
+
+	escribir "El promedio es ", promedio
+	
+	APROBADO(promedio)
+fin-programa
