@@ -1,6 +1,6 @@
 public class Simbolo {
-    private String nombre;
-    private Tipo tipo;
+    protected String nombre;
+    protected Tipo tipo;
 
     public Simbolo(String nombre, Tipo tipo) {
         this.nombre = nombre;
