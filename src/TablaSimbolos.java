@@ -16,7 +16,7 @@ public class TablaSimbolos {
                     " Ya fue declarado");
         }
         scopeActual.put(simbolo.getNombre(), simbolo);
-        System.out.println("[TABLA_SIMBOLOS] Definiendo: " + simbolo.getNombre() + " en scope actual");
+        //System.out.println("[TABLA_SIMBOLOS] Definiendo: " + simbolo.getNombre() + " en scope actual");
     }
 
     public Simbolo resolver(String nombre) {
@@ -45,13 +45,13 @@ public class TablaSimbolos {
     public void pushScope() {
         pilaScopes.push(scopeActual);
         scopeActual = new HashMap<>();
-        System.out.println("[TABLA_SIMBOLOS] Creando nuevo scope local. Profundidad: " + pilaScopes.size());
+        //System.out.println("[TABLA_SIMBOLOS] Creando nuevo scope local. Profundidad: " + pilaScopes.size());
     }
 
     public void popScope() {
         if (!pilaScopes.isEmpty()) {
             scopeActual = pilaScopes.pop();
-            System.out.println("[TABLA_SIMBOLOS] Restaurando scope anterior. Profundidad: " + pilaScopes.size());
+            //System.out.println("[TABLA_SIMBOLOS] Restaurando scope anterior. Profundidad: " + pilaScopes.size());
         }
     }
 
@@ -65,6 +65,6 @@ public class TablaSimbolos {
 
     public void definirSilencioso(Simbolo simbolo) {
         scopeActual.put(simbolo.getNombre(), simbolo);
-        System.out.println("[TABLA_SIMBOLOS] Definiendo silencioso: " + simbolo.getNombre());
+        //System.out.println("[TABLA_SIMBOLOS] Definiendo silencioso: " + simbolo.getNombre());
     }
 }

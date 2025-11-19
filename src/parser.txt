@@ -12,10 +12,9 @@ funcion PROMEDIO(entero: numeroDeElementos)
 	promedio = promedio / numeroDeElementos
 	regresa promedio
 fin-funcion
-	
+
+
 funcion APROBADO(flotante: promedio)
-	variables: booleano: aprobado
-	
 	si (promedio >= 7) entonces
 		escribir "Aprobado"
 	fin-si
@@ -25,9 +24,16 @@ funcion APROBADO(flotante: promedio)
 	fin-si
 fin-funcion
 
+funcion SUMA()
+	variables: flotante: resultado, num1, num2
+	leer num1
+	leer num2
+	resultado = num1 + num2
+	regresa resultado
+fin-funcion
 
 inicio-programa
-	variables: entero: numeroDeElementos; flotante: promedio
+	variables: entero: numeroDeElementos; flotante: promedio, resultado
 	
 	leer numeroDeElementos
 	promedio = 0
@@ -37,4 +43,9 @@ inicio-programa
 	escribir "El promedio es ", promedio
 	
 	APROBADO(promedio)
+	
+	resultado = SUMA()
+	
+	escribir "La suma es ", resultado
+	
 fin-programa

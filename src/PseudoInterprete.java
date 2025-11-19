@@ -37,11 +37,11 @@ public class PseudoInterprete {
             return;
         }
 
-        System.out.println("[INTERPRETE] Iniciando ejecución desde tupla " + indiceTupla);
+        //System.out.println("[INTERPRETE] Iniciando ejecución desde tupla " + indiceTupla);
         Tupla t = tuplas.get(indiceTupla);
 
         do {
-            System.out.println("[INTERPRETE] Ejecutando tupla " + indiceTupla + ": " + t.getClass().getSimpleName());
+            //System.out.println("[INTERPRETE] Ejecutando tupla " + indiceTupla + ": " + t.getClass().getSimpleName());
 
             if (t instanceof LlamadaFuncion) {
                 indiceTupla = ejecutarLlamadaFuncion((LlamadaFuncion) t, indiceTupla);
@@ -136,8 +136,8 @@ public class PseudoInterprete {
             // Definir en el scope local usando definirSilencioso
             ts.definirSilencioso(paramVar);
 
-            System.out.println("[INTERPRETE] Parámetro local creado: " +
-                    paramToken.getNombre() + " = " + valorArgumento);
+            /*System.out.println("[INTERPRETE] Parámetro local creado: " +
+                    paramToken.getNombre() + " = " + valorArgumento);*/
         }
 
         // Saltar a la primera instrucción de la función (después de InicioFuncion)
@@ -148,7 +148,7 @@ public class PseudoInterprete {
         Token valorRetorno = regresa.getValorRetorno();
 
         if (pilaLlamadas.isEmpty()) {
-            System.out.println("[INTERPRETE] Regresa sin contexto de función (fin de función en programa principal)");
+            //System.out.println("[INTERPRETE] Regresa sin contexto de función (fin de función en programa principal)");
             return regresa.getSaltoVerdadero();
         }
 
@@ -158,8 +158,8 @@ public class PseudoInterprete {
         if (valorRetorno != null) {
             ultimoValorRetorno = obtenerValorToken(valorRetorno);
             hayValorRetorno = true;
-            System.out.println("[INTERPRETE] Función " + contexto.getNombreFuncion() +
-                    " retorna: " + ultimoValorRetorno);
+            /*System.out.println("[INTERPRETE] Función " + contexto.getNombreFuncion() +
+                    " retorna: " + ultimoValorRetorno);*/
         }
 
         // *** DESTRUIR SCOPE LOCAL ***
