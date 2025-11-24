@@ -44,6 +44,8 @@ public class TipoToken {
     public static String ENTERO = "ENTERO";
     public static String FLOTANTE = "FLOTANTE";
     public static String BOOLEANO = "BOOLEANO";
+    public static String VERDADERO  = "VERDADERO";
+    public static String FALSO = "FALSO";
     public static String ESPACIO = "ESPACIO";
     public static String ERROR = "ERROR";
 }

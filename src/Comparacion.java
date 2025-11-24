@@ -17,13 +17,17 @@ public class Comparacion extends Tupla {
 
         if (valor1.getTipo().getNombre().equals("NUMERO"))
             operando1 = Float.parseFloat(valor1.getNombre());
-        else
-            operando1 = ((Variable) ts.resolver(valor1.getNombre())).getValor();
+        else {
+            Variable v1 = (Variable) ts.resolver(valor1.getNombre());
+            operando1 = v1.getValorFloat();
+        }
 
         if (valor2.getTipo().getNombre().equals("NUMERO"))
             operando2 = Float.parseFloat(valor2.getNombre());
-        else
-            operando2 = ((Variable) ts.resolver(valor2.getNombre())).getValor();
+        else {
+            Variable v2 = (Variable) ts.resolver(valor2.getNombre());
+            operando2 = v2.getValorFloat();
+        }
 
         switch (operador.getNombre()) {
             case "<": return operando1 < operando2 ? saltoVerdadero : saltoFalso;

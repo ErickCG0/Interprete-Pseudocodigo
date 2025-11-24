@@ -1,15 +1,22 @@
 public class Variable extends Simbolo {
-    private float valor = 0;
+    private Object valor = 0.0f;  // Puede ser Float o Boolean
 
     public Variable(String nombre, Tipo tipo) {
         super(nombre, tipo);
     }
 
-    public void setValor(float valor) {
+    public void setValor(Object valor) {
         this.valor = valor;
     }
 
-    public float getValor() {
+    public Object getValor() {
         return valor;
+    }
+    
+    public float getValorFloat() {
+        if (valor instanceof Number) {
+            return ((Number) valor).floatValue();
+        }
+        return 0.0f;
     }
 }

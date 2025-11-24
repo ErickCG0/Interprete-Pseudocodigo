@@ -175,7 +175,7 @@ public class PseudoInterprete {
         } else if (token.getTipo().getNombre().equals("VARIABLE")) {
             Variable v = (Variable) ts.resolver(token.getNombre());
             if (v != null) {
-                return v.getValor();
+                return v.getValorFloat();
             }
         }
         return 0.0f;

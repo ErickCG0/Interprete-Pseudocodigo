@@ -180,8 +180,7 @@ public class PseudoParser {
     private boolean ListaParametros(ArrayList<String> nombres, ArrayList<Tipo> tipos, ArrayList<Token> tokens) throws SemanticException {
         int indiceAux = indiceToken;
 
-        // Patrón: tipo: nombre (solo un parámetro por ahora en funciones simples)
-        // Para "funcion PROMEDIO(entero: numeroDeElementos)" o "funcion APROBADO(flotante: promedio)"
+        // Primer parámetro
         if (TipoVariable()) {
             Token tipoToken = this.tokens.get(indiceToken - 1);
             String nombreTipo = tipoToken.getNombre();
@@ -200,6 +199,41 @@ public class PseudoParser {
                     nombres.add(nombreParam);
                     tipos.add(tipo);
                     tokens.add(nombreToken);
+
+                    // Procesar parámetros adicionales separados por coma
+                    while (match("COMA")) {
+                        if (TipoVariable()) {
+                            tipoToken = this.tokens.get(indiceToken - 1);
+                            nombreTipo = tipoToken.getNombre();
+                            tipo = (Tipo) globalScope.resolve(nombreTipo);
+
+                            if (tipo == null) {
+                                if (semanticEx == null) {
+                                    semanticEx = new SemanticException("Tipo '" + nombreTipo + "' no reconocido");
+                                }
+                            }
+
+                            if (match("PUNTOS")) {
+                                nombreToken = getCurrentToken();
+                                if (match("VARIABLE")) {
+                                    nombreParam = nombreToken.getNombre();
+                                    nombres.add(nombreParam);
+                                    tipos.add(tipo);
+                                    tokens.add(nombreToken);
+                                } else {
+                                    indiceToken = indiceAux;
+                                    return false;
+                                }
+                            } else {
+                                indiceToken = indiceAux;
+                                return false;
+                            }
+                        } else {
+                            indiceToken = indiceAux;
+                            return false;
+                        }
+                    }
+
                     return true;
                 }
             }
@@ -522,6 +556,14 @@ public class PseudoParser {
         Token varToken = getCurrentToken();
         if (match("VARIABLE")) {
             resolveVariable(varToken.getNombre());
+
+            // Obtener el tipo de la variable
+            Simbolo sym = currentScope.resolve(varToken.getNombre());
+            Tipo tipoVariable = null;
+            if (sym != null && sym instanceof Variable) {
+                tipoVariable = sym.getTipo();
+            }
+
             if (match("IGUAL")) {
                 // Verificar si es una llamada a función
                 int indiceExpresion = indiceToken;
@@ -544,6 +586,93 @@ public class PseudoParser {
 
                 // No es una llamada a función, es una expresión normal
                 indiceToken = indiceExpresion;
+
+                // VALIDACIÓN DE TIPOS
+                Token valorToken = getCurrentToken();
+
+                // Si la variable es booleana
+                if (tipoVariable != null && tipoVariable.getNombre().equals("booleano")) {
+                    // Solo puede recibir VERDADERO, FALSO, u otra variable booleana
+                    if (valorToken != null) {
+                        String tipoValor = valorToken.getTipo().getNombre();
+
+                        if (tipoValor.equals("VERDADERO") || tipoValor.equals("FALSO")) {
+                            // OK - es un literal booleano
+                            if (Expresion()) {
+                                generador.crearTuplaAsignacion(indiceAux, indiceToken);
+                                return true;
+                            }
+                        } else if (tipoValor.equals("VARIABLE")) {
+                            // Verificar que la variable origen también sea booleana
+                            Simbolo symOrigen = currentScope.resolve(valorToken.getNombre());
+                            if (symOrigen != null && symOrigen instanceof Variable) {
+                                Tipo tipoOrigen = symOrigen.getTipo();
+                                if (tipoOrigen != null && !tipoOrigen.getNombre().equals("booleano")) {
+                                    if (semanticEx == null) {
+                                        semanticEx = new SemanticException("ERROR DE TIPO: No se puede asignar un valor de tipo '" +
+                                                tipoOrigen.getNombre() + "' a una variable booleana '" + varToken.getNombre() + "'");
+                                    }
+                                    System.out.println("ERROR DE TIPO: Intentando asignar " + tipoOrigen.getNombre() +
+                                            " a booleano '" + varToken.getNombre() + "'");
+                                }
+                            }
+                            if (Expresion()) {
+                                generador.crearTuplaAsignacion(indiceAux, indiceToken);
+                                return true;
+                            }
+                        } else if (tipoValor.equals("NUMERO")) {
+                            // ERROR - no se puede asignar número a booleano
+                            if (semanticEx == null) {
+                                semanticEx = new SemanticException("ERROR DE TIPO: No se puede asignar un número a una variable booleana '" +
+                                        varToken.getNombre() + "'");
+                            }
+                            System.out.println("ERROR DE TIPO: Intentando asignar número a booleano '" + varToken.getNombre() + "'");
+                            // Continuar parseando pero marcar el error
+                            if (Expresion()) {
+                                generador.crearTuplaAsignacion(indiceAux, indiceToken);
+                                return true;
+                            }
+                        }
+                    }
+                }
+                // Si la variable es numérica (entero o flotante)
+                else if (tipoVariable != null &&
+                        (tipoVariable.getNombre().equals("entero") || tipoVariable.getNombre().equals("flotante"))) {
+                    // No puede recibir VERDADERO o FALSO
+                    if (valorToken != null) {
+                        String tipoValor = valorToken.getTipo().getNombre();
+
+                        if (tipoValor.equals("VERDADERO") || tipoValor.equals("FALSO")) {
+                            // ERROR - no se puede asignar booleano a número
+                            if (semanticEx == null) {
+                                semanticEx = new SemanticException("ERROR DE TIPO: No se puede asignar un valor booleano a una variable numérica '" +
+                                        varToken.getNombre() + "'");
+                            }
+                            System.out.println("ERROR DE TIPO: Intentando asignar booleano a número '" + varToken.getNombre() + "'");
+                            // Continuar parseando pero marcar el error
+                            if (Expresion()) {
+                                generador.crearTuplaAsignacion(indiceAux, indiceToken);
+                                return true;
+                            }
+                        } else if (tipoValor.equals("VARIABLE")) {
+                            // Verificar que la variable origen no sea booleana
+                            Simbolo symOrigen = currentScope.resolve(valorToken.getNombre());
+                            if (symOrigen != null && symOrigen instanceof Variable) {
+                                Tipo tipoOrigen = symOrigen.getTipo();
+                                if (tipoOrigen != null && tipoOrigen.getNombre().equals("booleano")) {
+                                    if (semanticEx == null) {
+                                        semanticEx = new SemanticException("ERROR DE TIPO: No se puede asignar una variable booleana a una variable numérica '" +
+                                                varToken.getNombre() + "'");
+                                    }
+                                    System.out.println("ERROR DE TIPO: Intentando asignar booleano '" + valorToken.getNombre() +
+                                            "' a número '" + varToken.getNombre() + "'");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Procesar la expresión normalmente
                 if (Expresion()) {
                     generador.crearTuplaAsignacion(indiceAux, indiceToken);
                     return true;
@@ -582,7 +711,7 @@ public class PseudoParser {
             resolveVariable(token.getNombre());
             return true;
         }
-        return match("NUMERO");
+        return match("NUMERO") || match("VERDADERO") || match("FALSO");
     }
 
     private boolean Leer() throws SemanticException {

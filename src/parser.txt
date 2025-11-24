@@ -1,63 +1,32 @@
-funcion PROMEDIO(entero: numeroDeElementos) 
-	variables: entero: i; flotante: promedio, elemento
-	
-	i = 0
-	
-	mientras (i < numeroDeElementos)
-		leer elemento
-		promedio = promedio + elemento
-		i = i + 1
-	fin-mientras
-	
-	promedio = promedio / numeroDeElementos
-	regresa promedio
-fin-funcion
+funcion EDADVALIDA(entero: edad)
+	variables: booleano: esValida
 
+	esValida = falso
 
-funcion APROBADO(flotante: promedio)
-	si (promedio >= 7) entonces
-		escribir "Aprobado"
+	si (edad >= 18) entonces
+		esValida = verdadero
 	fin-si
-	
-	si (promedio < 7) entonces
-		escribir "No aprobado"
-	fin-si
-fin-funcion
 
-funcion SUMA()
-	variables: flotante: resultado, num1, num2
-	leer num1
-	leer num2
-	resultado = num1 + num2
-	regresa resultado
-fin-funcion
-
-funcion MULTI()
-	variables: flotante: resultado, num1, num2
-	leer num1
-	leer num2
-	resultado = num1 * num2
-	regresa resultado
+	regresa esValida
 fin-funcion
 
 inicio-programa
-	variables: entero: numeroDeElementos; flotante: promedio, resultado, resultadomul
-	
-	leer numeroDeElementos
-	promedio = 0
+	variables: entero: edad
+	variables: booleano: puedeEntrar
 
-	promedio = PROMEDIO(numeroDeElementos)
+	escribir "Ingrese su edad: "
+	leer edad
 
-	escribir "El promedio es ", promedio
-	
-	APROBADO(promedio)
-	
-	resultado = SUMA()
-	
-	resultadomul = MULTI()
-	
-	escribir "La suma es ", resultado
-	
-	escribir "La multiplicacion es ", resultadomul
-	
+	puedeEntrar = EDADVALIDA(edad)
+
+	escribir "Puede entrar: ", puedeEntrar
+
+	si (puedeEntrar == verdadero) entonces
+		escribir "Acceso permitido"
+	fin-si
+
+	si (puedeEntrar == falso) entonces
+		escribir "Acceso denegado"
+	fin-si
+
 fin-programa

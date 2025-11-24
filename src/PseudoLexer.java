@@ -35,6 +35,8 @@ public class PseudoLexer {
         tipos.add(new TipoToken(TipoToken.ENTERO,"entero"));
         tipos.add(new TipoToken(TipoToken.FLOTANTE,"flotante"));
         tipos.add(new TipoToken(TipoToken.BOOLEANO,"booleano"));
+        tipos.add(new TipoToken(TipoToken.VERDADERO,"verdadero"));
+        tipos.add(new TipoToken(TipoToken.FALSO,"falso"));
         tipos.add(new TipoToken(TipoToken.VARIABLE,"[a-zA-Z][a-zA-Z0-9]*"));
         tipos.add(new TipoToken(TipoToken.ESPACIO,"[ \t\f\r\n]+"));
         tipos.add(new TipoToken(TipoToken.ERROR,"[^ \t\f\n]+"));
