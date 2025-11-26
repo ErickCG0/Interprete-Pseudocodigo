@@ -1,32 +1,32 @@
 funcion EDADVALIDA(entero: edad)
-	variables: booleano: esValida
+    variables: booleano: esValida
 
-	esValida = falso
+    esValida = falso
 
-	si (edad >= 18) entonces
-		esValida = verdadero
-	fin-si
+    si (edad >= 18) entonces
+       esValida = verdadero
+    fin-si
 
-	regresa esValida
+    regresa esValida
 fin-funcion
 
 inicio-programa
-	variables: entero: edad
-	variables: booleano: puedeEntrar
+    variables: entero: edad
+    variables: booleano: puedeEntrar
 
-	escribir "Ingrese su edad: "
-	leer edad
+    escribir "Ingrese su edad: "
+    leer edad
 
-	puedeEntrar = EDADVALIDA(edad)
+    puedeEntrar = EDADVALIDA(edad)
 
-	escribir "Puede entrar: ", puedeEntrar
+    escribir "Puede entrar: ", puedeEntrar
 
-	si (puedeEntrar == verdadero) entonces
-		escribir "Acceso permitido"
-	fin-si
+    si (puedeEntrar == verdadero) entonces
+       escribir "Acceso permitido"
+    fin-si
 
-	si (puedeEntrar == falso) entonces
-		escribir "Acceso denegado"
-	fin-si
+    si (puedeEntrar == falso) entonces
+       escribir "Acceso denegado"
+    fin-si
 
 fin-programa

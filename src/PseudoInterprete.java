@@ -12,7 +12,7 @@ public class PseudoInterprete {
     private Stack<ContextoLlamada> pilaLlamadas = new Stack<>();
 
     // Variable temporal para almacenar el último valor de retorno
-    private float ultimoValorRetorno = 0.0f;
+    private Object ultimoValorRetorno = 0.0f;
     private boolean hayValorRetorno = false;
 
     public PseudoInterprete(TablaSimbolos ts, ArrayList<Tupla> tuplas, Map<String, Integer> direccionesFunciones) {
@@ -127,7 +127,7 @@ public class PseudoInterprete {
             Token argToken = argumentos.get(i);
             Token paramToken = parametros.get(i);
 
-            float valorArgumento = obtenerValorToken(argToken);
+            Object valorArgumento = obtenerValorToken(argToken);
 
             // Crear variable local para el parámetro
             Variable paramVar = new Variable(paramToken.getNombre(), null);
@@ -169,19 +169,23 @@ public class PseudoInterprete {
         return contexto.getDireccionRetorno();
     }
 
-    private float obtenerValorToken(Token token) {
+    private Object obtenerValorToken(Token token) {
         if (token.getTipo().getNombre().equals("NUMERO")) {
             return Float.parseFloat(token.getNombre());
+        } else if (token.getTipo().getNombre().equals("VERDADERO")) {
+            return true;
+        } else if (token.getTipo().getNombre().equals("FALSO")) {
+            return false;
         } else if (token.getTipo().getNombre().equals("VARIABLE")) {
             Variable v = (Variable) ts.resolver(token.getNombre());
             if (v != null) {
-                return v.getValorFloat();
+                return v.getValor();
             }
         }
         return 0.0f;
     }
 
-    public float getUltimoValorRetorno() {
+    public Object getUltimoValorRetorno() {
         return ultimoValorRetorno;
     }
 
