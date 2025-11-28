@@ -22,14 +22,14 @@ public class PseudoInterprete {
     }
 
     public void interpretar() {
-        // Primero, configurar el intérprete en todas las AsignacionConFuncion
+
         for (Tupla t : tuplas) {
             if (t instanceof AsignacionConFuncion) {
                 ((AsignacionConFuncion) t).setInterprete(this);
             }
         }
 
-        // Buscar el inicio del programa principal (después de las funciones)
+
         int indiceTupla = buscarInicioProgramaPrincipal();
 
         if (indiceTupla == -1) {
@@ -37,11 +37,10 @@ public class PseudoInterprete {
             return;
         }
 
-        //System.out.println("[INTERPRETE] Iniciando ejecución desde tupla " + indiceTupla);
         Tupla t = tuplas.get(indiceTupla);
 
         do {
-            //System.out.println("[INTERPRETE] Ejecutando tupla " + indiceTupla + ": " + t.getClass().getSimpleName());
+
 
             if (t instanceof LlamadaFuncion) {
                 indiceTupla = ejecutarLlamadaFuncion((LlamadaFuncion) t, indiceTupla);
@@ -115,7 +114,7 @@ public class PseudoInterprete {
         InicioFuncion inicioFuncion = (InicioFuncion) tuplaFuncion;
         ArrayList<Token> parametros = inicioFuncion.getParametros();
 
-        // *** CREAR NUEVO SCOPE LOCAL ***
+
         ts.pushScope();
 
         // Guardar el contexto actual
@@ -136,8 +135,7 @@ public class PseudoInterprete {
             // Definir en el scope local usando definirSilencioso
             ts.definirSilencioso(paramVar);
 
-            /*System.out.println("[INTERPRETE] Parámetro local creado: " +
-                    paramToken.getNombre() + " = " + valorArgumento);*/
+
         }
 
         // Saltar a la primera instrucción de la función (después de InicioFuncion)

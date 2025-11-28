@@ -11,7 +11,7 @@ public class PseudoParser {
     private boolean enDeclaracion = false;
     private SemanticException semanticEx;
     private PseudoGenerador generador;
-    private TablaSimbolos ts;  // <--- AÑADIR ESTA LÍNEA
+    private TablaSimbolos ts;
 
     public PseudoParser(TablaSimbolos ts, PseudoGenerador generador) {
         this.generador = generador;

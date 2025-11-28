@@ -1,32 +1,73 @@
-funcion EDADVALIDA(entero: edad)
-    variables: booleano: esValida
+funcion CALCULARPROMDEDIO(entero: cal1, entero: cal2, entero: cal3)
+    variables: flotante: promedio, suma
 
-    esValida = falso
+    suma = cal1 + cal2
+    suma = suma + cal3
+    promedio = suma / 3
 
-    si (edad >= 18) entonces
-       esValida = verdadero
+    regresa promedio
+fin-funcion
+
+funcion ESTAAPROBADO(flotante: calificacion)
+    variables: booleano: aprobado
+
+    aprobado = falso
+
+    si (calificacion >= 6) entonces
+        aprobado = verdadero
     fin-si
 
-    regresa esValida
+    regresa aprobado
+fin-funcion
+
+funcion TIENEEXCELENCIA(flotante: calificacion)
+    variables: booleano: excelente
+
+    excelente = falso
+
+    si (calificacion >= 9) entonces
+        excelente = verdadero
+    fin-si
+
+    regresa excelente
 fin-funcion
 
 inicio-programa
-    variables: entero: edad
-    variables: booleano: puedeEntrar
+    variables: entero: materia1, materia2, materia3
+    variables: flotante: promedio
+    variables: booleano: aprobado, excelente
 
-    escribir "Ingrese su edad: "
-    leer edad
+    escribir "=== CALCULADORA DE CALIFICACIONES ==="
 
-    puedeEntrar = EDADVALIDA(edad)
+    escribir "Calificacion de Matematicas: "
+    leer materia1
 
-    escribir "Puede entrar: ", puedeEntrar
+    escribir "Calificacion de Fisica: "
+    leer materia2
 
-    si (puedeEntrar == verdadero) entonces
-       escribir "Acceso permitido"
+    escribir "Calificacion de Quimica: "
+    leer materia3
+
+    promedio = CALCULARPROMDEDIO(materia1, materia2, materia3)
+
+    escribir "Tu promedio es: ", promedio
+
+    aprobado = ESTAAPROBADO(promedio)
+    excelente = TIENEEXCELENCIA(promedio)
+
+    escribir "Aprobado: ", aprobado
+    escribir "Excelencia: ", excelente
+
+    si (excelente == verdadero) entonces
+        escribir "FELICIDADES - Excelente estudiante"
     fin-si
 
-    si (puedeEntrar == falso) entonces
-       escribir "Acceso denegado"
+    si (aprobado == verdadero) entonces
+        escribir "Has aprobado el curso"
+    fin-si
+
+    si (aprobado == falso) entonces
+        escribir "Debes mejorar tus calificaciones"
     fin-si
 
 fin-programa

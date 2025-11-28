@@ -55,7 +55,7 @@ public class Comparacion extends Tupla {
             }
         }
 
-        // Comparación numérica (código original)
+
         float operando1 = 0, operando2 = 0;
 
         if (valor1.getTipo().getNombre().equals("NUMERO"))
