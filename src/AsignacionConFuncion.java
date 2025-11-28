@@ -21,7 +21,7 @@ public class AsignacionConFuncion extends Tupla {
             if (v != null) {
                 Object valorRetorno = interprete.getUltimoValorRetorno();
                 v.setValor(valorRetorno);
-                System.out.println("[INTERPRETE] Asignando " + variable.getNombre() + " = " + valorRetorno);
+               // System.out.println("[INTERPRETE] Asignando " + variable.getNombre() + " = " + valorRetorno);
                 interprete.limpiarValorRetorno();
             }
         }

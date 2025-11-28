@@ -95,7 +95,7 @@ public class PseudoInterprete {
         String nombreFuncion = llamada.getNombreFuncion().getNombre();
         ArrayList<Token> argumentos = llamada.getArgumentos();
 
-        System.out.println("[INTERPRETE] Llamando función: " + nombreFuncion);
+       // System.out.println("[INTERPRETE] Llamando función: " + nombreFuncion);
 
         // Obtener la dirección de la función
         Integer direccionFuncion = direccionesFunciones.get(nombreFuncion);

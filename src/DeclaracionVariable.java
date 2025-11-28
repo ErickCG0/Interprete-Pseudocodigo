@@ -29,10 +29,10 @@ public class DeclaracionVariable extends Tupla {
             // Inicializar según el tipo
             if (tipoToken.getNombre().equals("booleano")) {
                 v.setValor(false);  // Inicializar booleanos en falso
-                System.out.println("[EJECUTANDO] Variable booleana creada: " + varToken.getNombre() + " = falso");
+             //   System.out.println("[EJECUTANDO] Variable booleana creada: " + varToken.getNombre() + " = falso");
             } else {
                 v.setValor(0.0f);  // Inicializar números en 0
-                System.out.println("[EJECUTANDO] Variable numérica creada: " + varToken.getNombre() + " = 0.0");
+//System.out.println("[EJECUTANDO] Variable numérica creada: " + varToken.getNombre() + " = 0.0");
             }
 
             ts.definirSilencioso(v);
